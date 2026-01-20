@@ -2,7 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import { Image } from "astro:assets";
 import { projects } from "../data/projects";
+import logoBg from "../assets/logo.svg";
 ---
 
 <Layout>
@@ -12,10 +14,13 @@ import { projects } from "../data/projects";
         <!-- Header Page -->
         <div class="bg-[#151515] py-20 text-center relative overflow-hidden">
             <div class="absolute inset-0 z-0 opacity-20">
-                <img
-                    src="/logo.svg"
+                <Image
+                    src={logoBg}
                     alt="Keramik Bangunan Bandung logo background"
                     class="w-full h-full object-cover grayscale"
+                    width={400}
+                    height={400}
+                    loading="eager"
                 />
             </div>
             <div class="relative z-10 max-w-7xl mx-auto px-4">
@@ -33,21 +38,19 @@ import { projects } from "../data/projects";
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {
-                    projects.map((project) => (
+                    projects.map((project, index) => (
                         <a
                             href={`/proyek/${project.slug}`}
                             class="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer bg-white block"
                         >
                             <div class="aspect-w-4 aspect-h-3 h-80 overflow-hidden">
-                                <img
-                                    src={
-                                        typeof project.image === "string"
-                                            ? project.image
-                                            : project.image.src
-                                    }
+                                <Image
+                                    src={project.image as any}
                                     alt={project.title}
-                                    loading="lazy"
                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                                    width={800}
+                                    height={600}
+                                    loading={index < 3 ? "eager" : "lazy"}
                                 />
                             </div>
                             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">

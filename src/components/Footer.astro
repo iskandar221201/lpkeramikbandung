@@ -1,3 +1,8 @@
+---
+import { Image } from "astro:assets";
+import logoWhite from "../assets/Vector.svg";
+---
+
 <footer
     id="contact"
     class="relative bg-[#151515] text-white py-20 border-t border-gray-800 overflow-hidden"
@@ -21,12 +26,14 @@
             <!-- Brand & Info (Larger Column) -->
             <div class="lg:col-span-4 space-y-8">
                 <a href="/" class="inline-block group">
-                    <img
-                        src="/Vector.svg"
+                    <Image
+                        src={logoWhite}
                         alt="KKB Logo White"
                         class="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
                         decoding="async"
+                        width={150}
+                        height={48}
                     />
                 </a>
                 <p class="text-gray-400 leading-relaxed text-base max-w-sm">

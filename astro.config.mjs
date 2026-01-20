@@ -13,6 +13,17 @@ export default defineConfig({
     robotsTxt()
   ],
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: {
+      cssCodeSplit: true,
+      assetsInlineLimit: 4096,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor': ['@astrojs/sitemap']
+          }
+        }
+      }
+    }
   }
 });

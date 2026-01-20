@@ -1,5 +1,9 @@
 import project1 from "../assets/project1.webp";
 import project2 from "../assets/project2.webp";
+import project3 from "../assets/project3.png";
+import project4 from "../assets/project4.png";
+import project5 from "../assets/project5.png";
+import project6 from "../assets/project6.png";
 export const projects = [
     {
         slug: "rumah-minimalis-modern",
@@ -34,7 +38,7 @@ export const projects = [
         slug: "komplek-perumahan-elite",
         title: "Komplek Perumahan Elite",
         location: "Setiabudi, Bandung",
-        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop",
+        image: project3,
         category: "Residensial",
         description: "Pembangunan cluster perumahan mewah dengan fasilitas lengkap. Setiap unit didesain eksklusif dengan privasi tinggi dan pemandangan kota Bandung yang memukau.",
         details: [
@@ -47,7 +51,7 @@ export const projects = [
         slug: "villa-pegunungan",
         title: "Villa Pegunungan",
         location: "Lembang, Bandung",
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1000&auto=format&fit=crop",
+        image: project4,
         category: "Residensial",
         description: "Villa keluarga dengan konsep open-space yang menyatu dengan alam. Dilengkapi dengan kolam renang infinity dan area BBQ outdoor.",
         details: [
@@ -61,7 +65,7 @@ export const projects = [
         slug: "kantor-startup",
         title: "Kantor Startup",
         location: "Dago Pakar, Bandung",
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1000&auto=format&fit=crop",
+        image: project5,
         category: "Komersial",
         description: "Ruang kerja dinamis dan kolaboratif untuk perusahaan teknologi. Desain interior yang fun namun tetap produktif, dengan banyak area komunal dan meeting pod.",
         details: [
@@ -74,7 +78,7 @@ export const projects = [
         slug: "apartemen-studio",
         title: "Apartemen Studio",
         location: "Ciumbuleuit, Bandung",
-        image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1000&auto=format&fit=crop",
+        image: project6,
         category: "Interior",
         description: "Optimalisasi ruang terbatas pada apartemen tipe studio. Penggunaan furnitur multifungsi dan pemilihan warna cerah membuat ruangan terasa luas dan nyaman.",
         details: [

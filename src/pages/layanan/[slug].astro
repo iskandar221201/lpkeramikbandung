@@ -2,7 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+import { Image } from "astro:assets";
 import { services } from "../../data/services";
+import logoBg from "../../assets/logo.svg";
 
 export async function getStaticPaths() {
     return services.map((service) => ({
@@ -19,36 +21,81 @@ const { service } = Astro.props;
 
     <main class="pt-20">
         <!-- Header Page -->
-        <div class="bg-[#151515] py-24 text-center relative overflow-hidden">
-            <div class="absolute inset-0 z-0 opacity-20">
-                <img
-                    src="/logo.svg"
+        <div class="relative bg-[#151515] py-24 md:py-32 overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute inset-0 z-0">
+                <Image
+                    src={logoBg}
                     alt="Keramik Bangunan Bandung logo background"
-                    class="w-full h-full object-cover grayscale"
+                    class="w-full h-full object-cover opacity-10 grayscale scale-150 animate-pulse"
+                    width={400}
+                    height={400}
+                    loading="eager"
                 />
+                <div
+                    class="absolute inset-0 bg-gradient-to-b from-[#151515]/90 via-[#151515]/70 to-[#151515]"
+                >
+                </div>
             </div>
-            <div class="relative z-10 max-w-4xl mx-auto px-4">
-                <div class="flex justify-center mb-6">
-                    <div
-                        class="p-4 rounded-full bg-[#FE5C01]/10 text-[#FE5C01]"
+
+            <!-- Pattern Overlay -->
+            <div class="absolute inset-0 opacity-5 pointer-events-none">
+                <svg
+                    width="100%"
+                    height="100%"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <pattern
+                        id="gridPattern"
+                        x="0"
+                        y="0"
+                        width="40"
+                        height="40"
+                        patternUnits="userSpaceOnUse"
                     >
-                        <svg
-                            class="w-12 h-12"
+                        <path
+                            d="M 40 0 L 0 0 0 40"
                             fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            set:html={service.icon}
-                        />
+                            stroke="white"
+                            stroke-width="0.5"></path>
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#gridPattern)"
+                    ></rect>
+                </svg>
+            </div>
+
+            <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+                <div class="flex justify-center mb-10">
+                    <div class="relative">
+                        <div
+                            class="absolute inset-0 bg-[#FE5C01] blur-2xl opacity-20 animate-pulse"
+                        >
+                        </div>
+                        <div
+                            class="relative p-6 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 text-[#FE5C01] shadow-2xl"
+                        >
+                            <svg
+                                class="w-16 h-16"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                set:html={service.icon}
+                            />
+                        </div>
                     </div>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                <h1
+                    class="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tight"
+                >
                     {service.title}
                 </h1>
                 <p
-                    class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed"
+                    class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light"
                 >
-                    Kami memberikan layanan {service.title} terbaik untuk kebutuhan
-                    Anda dengan standar profesional dan hasil memuaskan.
+                    Solusi konstruksi profesional terintegrasi untuk mewujudkan
+                    <span class="text-white font-medium">{service.title}</span> dengan
+                    kualitas tanpa kompromi.
                 </p>
             </div>
         </div>
@@ -58,32 +105,155 @@ const { service } = Astro.props;
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 <!-- Main Description -->
                 <div class="lg:col-span-2">
-                    <h2 class="text-2xl font-bold text-[#151515] mb-6">
-                        Deskripsi Layanan
-                    </h2>
-                    <div class="prose prose-lg text-gray-600">
-                        <p class="leading-relaxed mb-6 font-medium text-lg">
-                            {service.description}
-                        </p>
-                        <p class="leading-relaxed mb-6">
-                            Tim ahli kami siap membantu Anda mewujudkan rencana
-                            ini. Dengan pengalaman bertahun-tahun, kami menjamin
-                            kualitas pengerjaan yang rapi, tepat waktu, dan
-                            sesuai dengan anggaran yang disepakati.
-                        </p>
-                        <ul
-                            class="space-y-4 mb-6 list-disc list-inside bg-gray-50 p-6 rounded-xl"
+                    <div class="prose prose-lg max-w-none">
+                        <h2
+                            class="text-3xl font-bold text-[#151515] mb-8 flex items-center"
                         >
-                            <li>Konsultasi gratis dan survei lokasi</li>
-                            <li>Perencanaan matang dan transparan</li>
-                            <li>Tenaga kerja profesional dan berpengalaman</li>
-                            <li>Garansi pemeliharaan pasca proyek</li>
-                        </ul>
-                        <p class="leading-relaxed">
-                            Hubungi kami segera untuk mendiskusikan kebutuhan
-                            Anda. Kami akan memberikan solusi terbaik yang
-                            disesuaikan dengan visi dan kondisi lapangan Anda.
-                        </p>
+                            <span class="w-2 h-8 bg-[#FE5C01] rounded-full mr-4"
+                            ></span>
+                            Deskripsi Layanan
+                        </h2>
+
+                        <div
+                            class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 rounded-3xl p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.03)] mb-12"
+                        >
+                            <p
+                                class="text-xl text-[#151515] leading-relaxed mb-8 font-medium italic border-l-4 border-[#FE5C01] pl-6"
+                            >
+                                {service.description}
+                            </p>
+                            <p class="text-gray-600 leading-relaxed text-lg">
+                                Tim ahli kami di Keramik Bangunan Bandung (KBB)
+                                berdedikasi untuk memberikan hasil yang melebihi
+                                ekspektasi. Dengan pengalaman lebih dari satu
+                                dekade, kami menggabungkan keahlian teknis
+                                dengan manajemen proyek yang transparan untuk
+                                memastikan setiap tahap pengerjaan berjalan
+                                efisien dan berkualitas tinggi.
+                            </p>
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-[#151515] mb-6">
+                            Komitmen Kualitas Kami
+                        </h3>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
+                        >
+                            <div
+                                class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start group hover:border-[#FE5C01]/30 transition-all duration-300 hover:shadow-lg"
+                            >
+                                <div
+                                    class="w-12 h-12 bg-[#FE5C01]/10 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-[#FE5C01] transition-colors"
+                                >
+                                    <svg
+                                        class="w-6 h-6 text-[#FE5C01] group-hover:text-white"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#151515] mb-1">
+                                        Survei Detail
+                                    </h4>
+                                    <p class="text-sm text-gray-500">
+                                        Analisis lapangan mendalam sebelum
+                                        pelaksanaan.
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start group hover:border-[#FE5C01]/30 transition-all duration-300 hover:shadow-lg"
+                            >
+                                <div
+                                    class="w-12 h-12 bg-[#FE5C01]/10 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-[#FE5C01] transition-colors"
+                                >
+                                    <svg
+                                        class="w-6 h-6 text-[#FE5C01] group-hover:text-white"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#151515] mb-1">
+                                        RAB Transparan
+                                    </h4>
+                                    <p class="text-sm text-gray-500">
+                                        Estimasi biaya jujur tanpa biaya
+                                        tersembunyi.
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start group hover:border-[#FE5C01]/30 transition-all duration-300 hover:shadow-lg"
+                            >
+                                <div
+                                    class="w-12 h-12 bg-[#FE5C01]/10 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-[#FE5C01] transition-colors"
+                                >
+                                    <svg
+                                        class="w-6 h-6 text-[#FE5C01] group-hover:text-white"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#151515] mb-1">
+                                        Tim Ahli
+                                    </h4>
+                                    <p class="text-sm text-gray-500">
+                                        Dikerjakan oleh spesialis berpengalaman.
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-start group hover:border-[#FE5C01]/30 transition-all duration-300 hover:shadow-lg"
+                            >
+                                <div
+                                    class="w-12 h-12 bg-[#FE5C01]/10 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-[#FE5C01] transition-colors"
+                                >
+                                    <svg
+                                        class="w-6 h-6 text-[#FE5C01] group-hover:text-white"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-[#151515] mb-1">
+                                        Garansi
+                                    </h4>
+                                    <p class="text-sm text-gray-500">
+                                        Jaminan pemeliharaan pasca serah terima.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mt-12">
@@ -110,24 +280,48 @@ const { service } = Astro.props;
 
                 <!-- Sidebar Details -->
                 <div class="lg:col-span-1">
-                    <div
-                        class="bg-white border border-gray-100 shadow-xl rounded-2xl p-8 sticky top-28"
-                    >
-                        <h3 class="text-xl font-bold text-[#151515] mb-4">
-                            Butuh Layanan Ini?
-                        </h3>
-                        <p class="text-gray-500 mb-6">
-                            Dapatkan penawaran terbaik untuk jasa {
-                                service.title
-                            } sekarang juga.
-                        </p>
-
-                        <a
-                            href="/contact"
-                            class="block w-full text-center bg-[#FE5C01] hover:bg-[#e54e00] text-white px-6 py-4 rounded-xl font-bold transition-all shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-1"
+                    <div class="sticky top-28 space-y-8">
+                        <div
+                            class="bg-white border border-gray-100 shadow-[0_30px_60px_rgba(0,0,0,0.05)] rounded-3xl p-8 relative overflow-hidden"
                         >
-                            Hubungi Kami
-                        </a>
+                            <!-- Sidebar Decoration -->
+                            <div
+                                class="absolute top-0 right-0 -mr-12 -mt-12 w-32 h-32 bg-[#FE5C01]/5 rounded-full blur-3xl"
+                            >
+                            </div>
+
+                            <h3
+                                class="text-2xl font-bold text-[#151515] mb-6 relative z-10 flex items-center"
+                            >
+                                <span
+                                    class="w-1.5 h-6 bg-[#FE5C01] rounded-full mr-3"
+                                ></span>
+                                Tertarik?
+                            </h3>
+                            <p
+                                class="text-gray-500 mb-8 relative z-10 leading-relaxed"
+                            >
+                                Dapatkan penawaran eksklusif dan konsultasi
+                                mendalam untuk jasa
+                                <span class="text-[#FE5C01] font-bold"
+                                    >{service.title}</span
+                                > hari ini.
+                            </p>
+
+                            <a
+                                href="/contact"
+                                class="group block w-full text-center bg-[#151515] hover:bg-[#FE5C01] text-white px-6 py-5 rounded-2xl font-bold transition-all duration-300 shadow-xl shadow-black/10 hover:shadow-[#FE5C01]/30 hover:-translate-y-1 relative z-10 overflow-hidden"
+                            >
+                                <span
+                                    class="relative z-10 group-hover:tracking-wider transition-all"
+                                    >Hubungi Kami</span
+                                >
+                                <div
+                                    class="absolute inset-0 bg-[#FE5C01] translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                                >
+                                </div>
+                            </a>
+                        </div>
 
                         <div class="mt-8 pt-6 border-t border-gray-100">
                             <h4 class="font-semibold text-gray-900 mb-3">

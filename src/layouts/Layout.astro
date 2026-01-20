@@ -31,14 +31,28 @@ const { title, description, canonical, image } = Astro.props;
 
 		<!-- DNS Prefetch -->
 		<link rel="dns-prefetch" href="https://images.unsplash.com" />
+		<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 
 		<!-- Google Fonts: Plus Jakarta Sans -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-			rel="stylesheet"
+			rel="preload"
+			as="style"
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
 		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+			rel="stylesheet"
+			media="print"
+			onload="this.media='all'"
+		/>
+		<noscript>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+				rel="stylesheet"
+			/>
+		</noscript>
 
 		<slot name="head" />
 	</head>
