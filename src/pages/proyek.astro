@@ -40,7 +40,11 @@ import { projects } from "../data/projects";
                         >
                             <div class="aspect-w-4 aspect-h-3 h-80 overflow-hidden">
                                 <img
-                                    src={project.image}
+                                    src={
+                                        typeof project.image === "string"
+                                            ? project.image
+                                            : project.image.src
+                                    }
                                     alt={project.title}
                                     loading="lazy"
                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"

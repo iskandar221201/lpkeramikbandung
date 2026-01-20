@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { projects as allProjects } from "../data/projects";
 
 // Show only the first 3 projects for the homepage
@@ -85,10 +86,12 @@ const projects = allProjects.slice(0, 3);
                         class="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer block transform hover:-translate-y-2 transition-all duration-300"
                     >
                         <div class="aspect-w-4 aspect-h-3 h-80 overflow-hidden">
-                            <img
-                                src={project.image}
+                            <Image
+                                src={project.image as any}
                                 alt={`${project.category} - ${project.title} di ${project.location} Bandung - Keramik Bangunan Bandung`}
                                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                                width={800}
+                                height={600}
                             />
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">

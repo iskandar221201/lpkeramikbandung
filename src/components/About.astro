@@ -1,3 +1,8 @@
+---
+import { Image } from "astro:assets";
+import aboutImageIndex from "../assets/aboutindex.webp";
+---
+
 <section id="about" class="py-24 bg-white relative overflow-hidden">
     <!-- Decorative Dots Pattern -->
     <div class="absolute top-0 right-0 -mr-20 -mt-20 hidden lg:block">
@@ -41,10 +46,10 @@
                 <div
                     class="relative rounded-2xl p-4 bg-white/50 backdrop-blur-sm border border-white/20 shadow-2xl"
                 >
-                    <img
+                    <Image
                         class="rounded-xl shadow-lg w-full h-[500px] object-cover"
-                        src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000&auto=format&fit=crop"
-                        alt="Construction Site"
+                        src={aboutImageIndex}
+                        alt="Tentang Keramik Bangunan Bandung"
                     />
 
                     <!-- Floating Experience Card -->
@@ -181,7 +186,7 @@
                     href="/about"
                     class="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-[#FE5C01] hover:bg-[#e54e00] transition-transform hover:-translate-y-1"
                 >
-                    Kenali Kami Lebih Dekat
+                    Kenal Kami Lebih Dekat
                     <svg
                         class="ml-2 -mr-1 w-5 h-5"
                         fill="none"

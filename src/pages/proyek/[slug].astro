@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
@@ -12,148 +13,278 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+
+// Prepare images for carousel (fallback to single image if array not present)
+// We preserve the full object (ImageMetadata) if available, or just the string.
+const carouselImages = project.images ? project.images : [project.image];
 ---
 
-<Layout>
+<Layout title={`${project.title} - Portofolio KKB`} description={project.description}>
     <Navbar />
 
-    <main class="pt-20">
-        <!-- Hero Project -->
-        <div class="relative h-[60vh] min-h-[500px] w-full">
-            <div class="absolute inset-0">
-                <img
-                    src={project.image}
-                    alt={project.title}
-                    class="w-full h-full object-cover"
-                />
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-[#151515] via-black/50 to-transparent"
-                >
+    <main>
+        <!-- Immersive Hero Section with Carousel -->
+        <div class="relative h-[85vh] min-h-[600px] w-full group overflow-hidden bg-[#151515]">
+            <!-- Carousel Container -->
+            <div id="hero-carousel" class="absolute inset-0 w-full h-full">
+                {carouselImages.map((image: any, index: number) => (
+                    <div 
+                        class={`carousel-slide absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+                        data-index={index}
+                    >
+                        <Image
+                            src={image}
+                            alt={`${project.title} - View ${index + 1}`}
+                            class="w-full h-full object-cover transform scale-100 animate-slow-zoom"
+                            loading={index === 0 ? "eager" : "lazy"}
+                            width={1920}
+                            height={1080}
+                        />
+                         <!-- Sophisticated Gradient Overlay (per slide to ensure visibility) -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#151515] via-[#151515]/60 to-transparent opacity-90"></div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent"></div>
+                    </div>
+                ))}
+            </div>
+
+            <!-- Carousel Indicators -->
+            {carouselImages.length > 1 && (
+                <div class="absolute bottom-32 right-8 flex space-x-2 z-20">
+                    {carouselImages.map((_: any, index: number) => (
+                        <button 
+                            class={`w-12 h-1 rounded-full transition-all duration-300 ${index === 0 ? 'bg-[#FE5C01]' : 'bg-white/30 hover:bg-white/50'}`}
+                            aria-label={`Go to slide ${index + 1}`}
+                            data-slide={index}
+                        ></button>
+                    ))}
+                </div>
+            )}
+
+            <!-- Hero Content -->
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-24 pointer-events-none">
+                <div class="max-w-4xl animate-fade-in-up pointer-events-auto">
+                    <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-1.5 rounded-full text-sm font-medium w-fit mb-6">
+                        <span class="w-2 h-2 rounded-full bg-[#FE5C01]"></span>
+                        <span>{project.category}</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                        {project.title}
+                    </h1>
+                    
+                    <div class="flex items-center text-xl text-gray-300">
+                        <svg class="w-6 h-6 mr-3 text-[#FE5C01]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        {project.location}
+                    </div>
                 </div>
             </div>
-            <div
-                class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-16"
-            >
-                <div
-                    class="inline-flex items-center space-x-2 bg-[#FE5C01] text-white px-4 py-1.5 rounded-full text-sm font-medium w-fit mb-4"
-                >
-                    <span>{project.category}</span>
-                </div>
-                <h1
-                    class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
-                >
-                    {project.title}
-                </h1>
-                <p class="text-xl text-gray-300 flex items-center">
-                    <svg
-                        class="w-5 h-5 mr-2 text-[#FE5C01]"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        ></path>
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    {project.location}
-                </p>
+
+            <!-- Scroll Indicator -->
+             <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center text-white/50 pointer-events-none">
+                <span class="text-xs uppercase tracking-widest mb-2">Scroll</span>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
             </div>
         </div>
 
-        <!-- Content -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                <!-- Main Description -->
-                <div class="lg:col-span-2">
-                    <h2 class="text-2xl font-bold text-[#151515] mb-6">
-                        Tentang Proyek
-                    </h2>
-                    <div class="prose prose-lg text-gray-600">
-                        <p class="leading-relaxed mb-6">
-                            {project.description}
+        <!-- Content Section -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <!-- Breadcrumbs in Main Content Area -->
+            <nav class="mb-10 text-sm text-gray-500">
+                <ol class="flex items-center space-x-2">
+                    <li><a href="/" class="hover:text-[#FE5C01] transition-colors">Beranda</a></li>
+                    <li><span>/</span></li>
+                    <li><a href="/proyek" class="hover:text-[#FE5C01] transition-colors">Proyek</a></li>
+                    <li><span>/</span></li>
+                    <li class="text-[#FE5C01] font-medium">{project.title}</li>
+                </ol>
+            </nav>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+                
+                <!-- Main Content (Left) -->
+                <div class="lg:col-span-8">
+                    <div class="prose prose-lg prose-headings:font-bold prose-headings:text-[#151515] prose-p:text-gray-600 prose-a:text-[#FE5C01] max-w-none">
+                        <h2 class="text-3xl font-bold text-[#151515] mb-8 relative inline-block">
+                            Tentang Proyek
+                            <span class="absolute -bottom-2 left-0 w-1/3 h-1 bg-[#FE5C01] rounded-full"></span>
+                        </h2>
+                        
+                        <p class="text-xl text-gray-500 font-medium leading-relaxed mb-10 border-l-4 border-[#FE5C01] pl-6 italic">
+                            "{project.description}"
                         </p>
-                        <p class="leading-relaxed mb-6">
-                            Kami memastikan setiap detail dikerjakan dengan
-                            presisi tinggi demi kepuasan klien. Mulai dari
-                            pemilihan material hingga finishing, standar
-                            kualitas KKB selalu menjadi prioritas utama.
-                        </p>
-                        <p class="leading-relaxed">
-                            Hasil akhirnya bukan hanya sebuah bangunan, tetapi
-                            sebuah ruang yang siap mendukung aktivitas dan gaya
-                            hidup pengguna di dalamnya.
+
+                        <div class="bg-gray-50 rounded-2xl p-8 mb-10">
+                            <h3 class="text-xl font-bold mb-4">Pendekatan Kami</h3>
+                            <p class="mb-0">
+                                Dalam proyek {project.title}, tim Keramik Bangunan Bandung berfokus pada integrasi fungsionalitas dan estetika. 
+                                Kami memastikan setiap detail dikerjakan dengan presisi tinggi demi kepuasan klien. 
+                                Mulai dari pemilihan material hingga finishing, standar kualitas KKB selalu menjadi prioritas utama.
+                            </p>
+                        </div>
+
+                        <p>
+                            Hasil akhirnya bukan hanya sebuah bangunan, tetapi sebuah ruang yang siap mendukung aktivitas dan gaya hidup pengguna di dalamnya.
+                            Kami bangga dapat menjadi bagian dari perjalanan mewujudkan visi ini.
                         </p>
                     </div>
 
-                    <div class="mt-12">
-                        <a
-                            href="/proyek"
-                            class="inline-flex items-center text-[#FE5C01] font-semibold hover:text-[#e54e00] transition-colors"
-                        >
-                            <svg
-                                class="w-5 h-5 mr-2 transform rotate-180"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                            Kembali ke Galeri Proyek
+                    <div class="mt-16 flex justify-between items-center border-t border-gray-200 pt-8">
+                        <a href="/proyek" class="group inline-flex items-center text-gray-500 hover:text-[#FE5C01] font-medium transition-colors">
+                            <div class="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-[#FE5C01]/10 flex items-center justify-center mr-3 transition-colors">
+                                <svg class="w-5 h-5 group-hover:text-[#FE5C01]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                            </div>
+                            Kembali ke Galeri
                         </a>
                     </div>
                 </div>
 
-                <!-- Sidebar Details -->
-                <div class="lg:col-span-1">
-                    <div class="bg-gray-50 rounded-2xl p-8 sticky top-28">
-                        <h3
-                            class="text-xl font-bold text-[#151515] mb-6 border-b border-gray-200 pb-4"
-                        >
-                            Detail Proyek
-                        </h3>
-                        <div class="space-y-4">
-                            {
-                                project.details?.map((detail) => (
-                                    <div class="flex justify-between items-start">
-                                        <span class="text-gray-500 font-medium">
+                <!-- Sidebar (Right) -->
+                <div class="lg:col-span-4 space-y-8">
+                    <!-- Project Details Card (Sticky) -->
+                    <div class="sticky top-28 space-y-8">
+                        <div class="bg-white rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 relative overflow-hidden">
+                            <!-- Background Decoration -->
+                             <div class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-[#FE5C01]/5 rounded-full blur-2xl"></div>
+
+                            <h3 class="text-lg font-bold text-[#151515] mb-6 flex items-center">
+                                <span class="w-1 h-6 bg-[#FE5C01] rounded-full mr-3"></span>
+                                Detail Spesifikasi
+                            </h3>
+                            
+                            <div class="space-y-6">
+                                {project.details?.map((detail: any) => (
+                                    <div class="flex flex-col group">
+                                        <span class="text-xs text-gray-400 uppercase tracking-wider mb-1 font-medium group-hover:text-[#FE5C01] transition-colors">
                                             {detail.label}
                                         </span>
-                                        <span class="text-[#151515] font-semibold text-right">
+                                        <span class="text-[#151515] font-semibold text-lg border-b border-gray-100 pb-2">
                                             {detail.value}
                                         </span>
                                     </div>
-                                ))
-                            }
+                                ))}
+                            </div>
                         </div>
 
-                        <div class="mt-8 pt-6 border-t border-gray-200">
-                            <p class="text-gray-600 text-sm mb-4">
-                                Tertarik dengan hasil kerja kami?
-                            </p>
-                            <a
-                                href="/contact"
-                                class="block w-full text-center bg-[#FE5C01] hover:bg-[#e54e00] text-white px-6 py-3 rounded-xl font-medium transition-colors shadow-lg shadow-orange-500/30"
-                            >
-                                Hubungi Kami
+                        <!-- CTA Card -->
+                        <div class="bg-[#151515] rounded-2xl p-8 text-center text-white relative overflow-hidden">
+                            <div class="absolute inset-0 bg-[#FE5C01] opacity-10"></div>
+                            
+                            <h3 class="text-xl font-bold mb-3 relative z-10">Tertarik dengan Desain Ini?</h3>
+                            <p class="text-gray-400 text-sm mb-6 relative z-10">Diskusikan visi Anda bersama tim ahli kami.</p>
+                            
+                            <a href="/contact" class="block w-full bg-[#FE5C01] hover:bg-[#e54e00] text-white py-4 rounded-xl font-bold transition-all transform hover:-translate-y-1 shadow-lg shadow-[#FE5C01]/30 relative z-10">
+                                Hubungi Kami Sekarang
                             </a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
+
+        <!-- Bottom CTA -->
+        <section class="py-24 bg-gray-50 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-5">
+                <svg width="100%" height="100%">
+                    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"/>
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                </svg>
+            </div>
+            
+            <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                <h2 class="text-3xl md:text-5xl font-bold text-[#151515] mb-6">Siap Mewujudkan <br/><span class="text-[#FE5C01]">Bangunan Impian?</span></h2>
+                <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">Konsultasikan kebutuhan konstruksi Anda secara gratis. Kami siap memberikan solusi terbaik sesuai budget dan ekspektasi Anda.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="/contact" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-full shadow-xl text-white bg-[#FE5C01] hover:bg-[#e54e00] transition-all transform hover:-translate-y-1">
+                        Konsultasi Gratis
+                    </a>
+                    <a href="https://wa.me/6281234567890" target="_blank" class="inline-flex items-center justify-center px-8 py-4 border-2 border-[#151515] text-lg font-medium rounded-full text-[#151515] hover:bg-[#151515] hover:text-white transition-all">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.646-.446-.175 0-.447.004-.68.007-.233.002-.546.092-.832.399-.286.306-1.102 1.076-1.102 2.624s1.129 3.046 1.289 3.259c.159.213 2.203 3.393 5.352 4.739 3.149 1.346 3.149 1.346 3.784 1.259.636-.087 1.758-.718 2.006-1.411.248-.693.248-1.288.173-1.412-.074-.124-.272-.199-.57-.348z"/>
+                        </svg>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <Footer />
 </Layout>
+
+<script>
+    // Carousel Logic
+    function initCarousel() {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('[data-slide]');
+        
+        if (slides.length <= 1) return;
+
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        const intervalTime = 5000; // 5 seconds
+        let slideInterval: any;
+
+        function showSlide(index: number) {
+            slides.forEach((slide) => {
+                slide.classList.remove('opacity-100');
+                slide.classList.add('opacity-0');
+            });
+            indicators.forEach((indicator) => {
+                indicator.classList.remove('bg-[#FE5C01]');
+                indicator.classList.add('bg-white/30');
+            });
+
+            slides[index].classList.remove('opacity-0');
+            slides[index].classList.add('opacity-100');
+            
+            if(indicators[index]) {
+                indicators[index].classList.remove('bg-white/30');
+                indicators[index].classList.add('bg-[#FE5C01]');
+            }
+            
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        // Clear existing interval if any (to prevent multiple intervals on re-runs)
+        if ((window as any).carouselInterval) clearInterval((window as any).carouselInterval);
+        
+        slideInterval = setInterval(nextSlide, intervalTime);
+        (window as any).carouselInterval = slideInterval;
+
+        // Indicator Clicks
+        indicators.forEach((indicator) => {
+            // Use onclick assignment to override any existing handlers and avoid node identity loss
+            (indicator as HTMLElement).onclick = (e) => {
+                clearInterval((window as any).carouselInterval);
+                const target = e.target as HTMLElement;
+                const index = parseInt(target.dataset.slide || '0');
+                showSlide(index);
+                // Restart interval
+                (window as any).carouselInterval = setInterval(nextSlide, intervalTime);
+            };
+        });
+    }
+
+    // Run on standard load
+    document.addEventListener('DOMContentLoaded', initCarousel);
+    // Also run immediately in case DOM is already ready (scripts are deferred)
+    initCarousel();
+    
+    // Support View Transitions if added later
+    document.addEventListener('astro:page-load', initCarousel);
+</script>

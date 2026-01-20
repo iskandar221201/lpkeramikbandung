@@ -1,9 +1,12 @@
+import project1 from "../assets/project1.webp";
+import project2 from "../assets/project2.webp";
 export const projects = [
     {
         slug: "rumah-minimalis-modern",
         title: "Rumah Minimalis Modern",
         location: "Dago, Bandung",
-        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000&auto=format&fit=crop",
+        image: project1,
+        images: [project1, project2, project1],
         category: "Residensial",
         description: "Desain rumah minimalis modern dengan sentuhan alam yang menenangkan. Menggunakan material ramah lingkungan dan sistem pencahayaan alami yang optimal. Proyek ini mencakup pembangunan struktur utama, interior custom, dan tamah landscape.",
         details: [
@@ -16,8 +19,9 @@ export const projects = [
     {
         slug: "renovasi-kafe-industrial",
         title: "Renovasi Kafe Industrial",
+        images: [project2, project1, project2],
         location: "Braga, Bandung",
-        image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop",
+        image: project2,
         category: "Komersial",
         description: "Transformasi bangunan tua menjadi kafe bergaya industrial yang ikonik di kawasan Braga. Mempertahankan elemen vintage sambil menyuntikkan sentuhan modern yang disukai kaum milenial.",
         details: [
