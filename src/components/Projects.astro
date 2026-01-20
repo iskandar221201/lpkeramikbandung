@@ -1,0 +1,150 @@
+---
+import { projects as allProjects } from "../data/projects";
+
+// Show only the first 3 projects for the homepage
+const projects = allProjects.slice(0, 3);
+---
+
+<section id="projects" class="py-24 bg-white relative overflow-hidden">
+    <!-- Decorative Dots Pattern -->
+    <div class="absolute bottom-0 right-0 -mr-20 -mb-20 hidden lg:block">
+        <svg
+            width="404"
+            height="404"
+            fill="none"
+            viewBox="0 0 404 404"
+            aria-hidden="true"
+            class="text-gray-100"
+        >
+            <defs>
+                <pattern
+                    id="projects-pattern"
+                    x="0"
+                    y="0"
+                    width="20"
+                    height="20"
+                    patternUnits="userSpaceOnUse"
+                >
+                    <rect
+                        x="0"
+                        y="0"
+                        width="4"
+                        height="4"
+                        class="text-gray-200"
+                        fill="currentColor"></rect>
+                </pattern>
+            </defs>
+            <rect width="404" height="404" fill="url(#projects-pattern)"></rect>
+        </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16"
+        >
+            <div class="max-w-2xl">
+                <h2
+                    class="text-[#FE5C01] font-semibold tracking-wide uppercase text-sm mb-3"
+                >
+                    Portfolio
+                </h2>
+                <h3
+                    class="text-3xl md:text-5xl font-bold text-[#151515] leading-tight"
+                >
+                    Proyek <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-[#FE5C01] to-orange-600"
+                        >Unggulan</span
+                    > Kami
+                </h3>
+            </div>
+            <a
+                href="/proyek"
+                class="hidden md:inline-flex items-center px-6 py-3 border border-[#FE5C01] text-base font-medium rounded-full text-[#FE5C01] bg-white hover:bg-orange-50 transition-all shadow-sm hover:shadow-md mt-4 md:mt-0"
+            >
+                Lihat Semua Proyek
+                <svg
+                    class="w-5 h-5 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {
+                projects.map((project) => (
+                    <a
+                        href={`/proyek/${project.slug}`}
+                        class="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer block transform hover:-translate-y-2 transition-all duration-300"
+                    >
+                        <div class="aspect-w-4 aspect-h-3 h-80 overflow-hidden">
+                            <img
+                                src={project.image}
+                                alt={`${project.category} - ${project.title} di ${project.location} Bandung - Keramik Bangunan Bandung`}
+                                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                            />
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                            <span class="text-[#FE5C01] text-sm font-medium mb-1 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
+                                {project.category}
+                            </span>
+                            <h4 class="text-white text-xl font-bold mb-1 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 delay-75">
+                                {project.title}
+                            </h4>
+                            <p class="text-gray-300 text-sm transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 delay-100 flex items-center">
+                                <svg
+                                    class="w-4 h-4 mr-1"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                    />
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                    />
+                                </svg>
+                                {project.location}
+                            </p>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+
+        <div class="mt-12 text-center md:hidden">
+            <a
+                href="/proyek"
+                class="inline-flex items-center px-6 py-3 border border-[#FE5C01] text-base font-medium rounded-full text-[#FE5C01] bg-white hover:bg-orange-50 transition-all shadow-sm"
+            >
+                Lihat Semua Proyek
+                <svg
+                    class="w-5 h-5 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>

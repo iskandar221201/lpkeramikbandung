@@ -1,0 +1,50 @@
+---
+interface Props {
+    title?: string;
+    description?: string;
+    canonical?: string;
+    image?: string;
+}
+
+const {
+    title = "Kontraktor Bangunan Terpercaya di Bandung - Keramik Bangunan Bandung (KBB)",
+    description = "Jasa kontraktor profesional di Bandung. Solusi konstruksi end-to-end dari desain hingga serah terima kunci dengan garansi struktur dan pengerjaan tepat waktu.",
+    canonical = Astro.url.pathname,
+    image = "/og-image.jpg",
+} = Astro.props;
+
+const siteUrl = Astro.site || "https://keramikbangunan.com";
+const canonicalURL = new URL(canonical, siteUrl).href;
+const ogImageURL = new URL(image, siteUrl).href;
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:locale" content="id_ID" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImageURL} />
+
+<!-- Keywords -->
+<meta
+    name="keywords"
+    content="kontraktor bandung, jasa renovasi bandung, jasa bangun rumah bandung, kontraktor terpercaya bandung, pembangunan gedung bandung"
+/>
+
+<!-- Geo Tags -->
+<meta name="geo.region" content="ID-JB" />
+<meta name="geo.placename" content="Bandung" />

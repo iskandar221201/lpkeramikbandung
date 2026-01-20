@@ -1,0 +1,104 @@
+---
+import { services } from "../data/services";
+---
+
+<section id="services" class="py-24 bg-gray-50 relative overflow-hidden">
+    <!-- Decorative Dots Pattern -->
+    <div class="absolute top-0 left-0 -ml-20 -mt-20 hidden lg:block">
+        <svg
+            width="404"
+            height="404"
+            fill="none"
+            viewBox="0 0 404 404"
+            aria-hidden="true"
+            class="text-gray-200/60"
+        >
+            <defs>
+                <pattern
+                    id="phases-pattern"
+                    x="0"
+                    y="0"
+                    width="20"
+                    height="20"
+                    patternUnits="userSpaceOnUse"
+                >
+                    <rect
+                        x="0"
+                        y="0"
+                        width="4"
+                        height="4"
+                        class="text-gray-200"
+                        fill="currentColor"></rect>
+                </pattern>
+            </defs>
+            <rect width="404" height="404" fill="url(#phases-pattern)"></rect>
+        </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <h2
+                class="text-[#FE5C01] font-semibold tracking-wide uppercase text-sm mb-3"
+            >
+                Layanan Kami
+            </h2>
+            <h3 class="text-3xl md:text-5xl font-bold text-[#151515] mb-6">
+                Solusi Konstruksi <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-[#FE5C01] to-orange-600"
+                    >Terintegrasi</span
+                >
+            </h3>
+            <p class="text-gray-600 text-lg leading-relaxed">
+                Kami menawarkan berbagai layanan konstruksi yang disesuaikan
+                dengan kebutuhan Anda, mulai dari tahap perencanaan hingga
+                penyelesaian akhir.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {
+                services.map((service) => (
+                    <a href={`/layanan/${service.slug}`} class="group">
+                        <div class="bg-white rounded-2xl p-8 h-full shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-[#FE5C01]/30 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-orange-50 rounded-bl-full -mr-4 -mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                            <div class="relative z-10">
+                                <div class="w-16 h-16 bg-[#FE5C01]/5 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-[#FE5C01] transition-all duration-300">
+                                    <svg
+                                        class="w-8 h-8 text-[#FE5C01] group-hover:text-white transition-colors duration-300"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        set:html={service.icon}
+                                    />
+                                </div>
+                                <h4 class="text-2xl font-bold text-[#151515] mb-4 group-hover:text-[#FE5C01] transition-colors">
+                                    {service.title}
+                                </h4>
+                                <p class="text-gray-600 leading-relaxed text-sm mb-6">
+                                    {service.description}
+                                </p>
+                                <div class="flex items-center text-[#FE5C01] font-medium text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                    Selengkapnya
+                                    <svg
+                                        class="w-4 h-4 ml-1"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</section>

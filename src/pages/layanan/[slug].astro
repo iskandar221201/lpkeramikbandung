@@ -1,0 +1,197 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { services } from "../../data/services";
+
+export async function getStaticPaths() {
+    return services.map((service) => ({
+        params: { slug: service.slug },
+        props: { service },
+    }));
+}
+
+const { service } = Astro.props;
+---
+
+<Layout>
+    <Navbar />
+
+    <main class="pt-20">
+        <!-- Header Page -->
+        <div class="bg-[#151515] py-24 text-center relative overflow-hidden">
+            <div class="absolute inset-0 z-0 opacity-20">
+                <img
+                    src="/logo.svg"
+                    alt="Keramik Bangunan Bandung logo background"
+                    class="w-full h-full object-cover grayscale"
+                />
+            </div>
+            <div class="relative z-10 max-w-4xl mx-auto px-4">
+                <div class="flex justify-center mb-6">
+                    <div
+                        class="p-4 rounded-full bg-[#FE5C01]/10 text-[#FE5C01]"
+                    >
+                        <svg
+                            class="w-12 h-12"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            set:html={service.icon}
+                        />
+                    </div>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    {service.title}
+                </h1>
+                <p
+                    class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed"
+                >
+                    Kami memberikan layanan {service.title} terbaik untuk kebutuhan
+                    Anda dengan standar profesional dan hasil memuaskan.
+                </p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <!-- Main Description -->
+                <div class="lg:col-span-2">
+                    <h2 class="text-2xl font-bold text-[#151515] mb-6">
+                        Deskripsi Layanan
+                    </h2>
+                    <div class="prose prose-lg text-gray-600">
+                        <p class="leading-relaxed mb-6 font-medium text-lg">
+                            {service.description}
+                        </p>
+                        <p class="leading-relaxed mb-6">
+                            Tim ahli kami siap membantu Anda mewujudkan rencana
+                            ini. Dengan pengalaman bertahun-tahun, kami menjamin
+                            kualitas pengerjaan yang rapi, tepat waktu, dan
+                            sesuai dengan anggaran yang disepakati.
+                        </p>
+                        <ul
+                            class="space-y-4 mb-6 list-disc list-inside bg-gray-50 p-6 rounded-xl"
+                        >
+                            <li>Konsultasi gratis dan survei lokasi</li>
+                            <li>Perencanaan matang dan transparan</li>
+                            <li>Tenaga kerja profesional dan berpengalaman</li>
+                            <li>Garansi pemeliharaan pasca proyek</li>
+                        </ul>
+                        <p class="leading-relaxed">
+                            Hubungi kami segera untuk mendiskusikan kebutuhan
+                            Anda. Kami akan memberikan solusi terbaik yang
+                            disesuaikan dengan visi dan kondisi lapangan Anda.
+                        </p>
+                    </div>
+
+                    <div class="mt-12">
+                        <a
+                            href="/layanan"
+                            class="inline-flex items-center text-[#FE5C01] font-semibold hover:text-[#e54e00] transition-colors"
+                        >
+                            <svg
+                                class="w-5 h-5 mr-2 transform rotate-180"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                            Kembali ke Daftar Layanan
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Details -->
+                <div class="lg:col-span-1">
+                    <div
+                        class="bg-white border border-gray-100 shadow-xl rounded-2xl p-8 sticky top-28"
+                    >
+                        <h3 class="text-xl font-bold text-[#151515] mb-4">
+                            Butuh Layanan Ini?
+                        </h3>
+                        <p class="text-gray-500 mb-6">
+                            Dapatkan penawaran terbaik untuk jasa {
+                                service.title
+                            } sekarang juga.
+                        </p>
+
+                        <a
+                            href="/contact"
+                            class="block w-full text-center bg-[#FE5C01] hover:bg-[#e54e00] text-white px-6 py-4 rounded-xl font-bold transition-all shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-1"
+                        >
+                            Hubungi Kami
+                        </a>
+
+                        <div class="mt-8 pt-6 border-t border-gray-100">
+                            <h4 class="font-semibold text-gray-900 mb-3">
+                                Mengapa Memilih Kami?
+                            </h4>
+                            <ul class="space-y-3">
+                                <li
+                                    class="flex items-start text-sm text-gray-600"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-green-500 mr-2 flex-shrink-0"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Berpengalaman > 10 Tahun
+                                </li>
+                                <li
+                                    class="flex items-start text-sm text-gray-600"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-green-500 mr-2 flex-shrink-0"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Transparansi Biaya
+                                </li>
+                                <li
+                                    class="flex items-start text-sm text-gray-600"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-green-500 mr-2 flex-shrink-0"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Material Berkualitas
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <Footer />
+</Layout>
